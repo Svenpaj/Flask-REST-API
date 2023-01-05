@@ -1,0 +1,72 @@
+# Bid
+CREATE TABLE
+  `bids` (
+    `id` int unsigned NOT NULL AUTO_INCREMENT,
+    `user` int unsigned NOT NULL,
+    `object` int unsigned NOT NULL,
+    `amount` int NOT NULL,
+    `date` timestamp NOT NULL,
+    PRIMARY KEY (`id`),
+    KEY `bids_X_user` (`user`),
+    KEY `bids_X_object` (`object`),
+    CONSTRAINT `bids_X_object` FOREIGN KEY (`object`) REFERENCES `object` (`id`),
+    CONSTRAINT `bids_X_user` FOREIGN KEY (`user`) REFERENCES `users` (`id`)
+  ) ENGINE = InnoDB AUTO_INCREMENT = 3 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci
+
+# Categories
+ CREATE TABLE
+  `categories` (
+    `id` int unsigned NOT NULL AUTO_INCREMENT,
+    `category` varchar(255) NOT NULL,
+    PRIMARY KEY (`id`)
+  ) ENGINE = InnoDB AUTO_INCREMENT = 5 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci
+
+  # Images
+  CREATE TABLE
+  `images` (
+    `id` int unsigned NOT NULL AUTO_INCREMENT,
+    `adress` varchar(255) NOT NULL,
+    `object` int unsigned NOT NULL,
+    PRIMARY KEY (`id`),
+    KEY `images_X_object` (`object`),
+    CONSTRAINT `images_X_object` FOREIGN KEY (`object`) REFERENCES `object` (`id`)
+  ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci
+
+  # Objects
+  CREATE TABLE
+  `object` (
+    `id` int unsigned NOT NULL AUTO_INCREMENT,
+    `title` varchar(255) NOT NULL,
+    `start_time` datetime NOT NULL,
+    `end_time` datetime NOT NULL,
+    `description` varchar(255) NOT NULL,
+    `poster` int unsigned DEFAULT NULL,
+    `info` varchar(255) DEFAULT NULL,
+    `starting_price` int DEFAULT NULL,
+    `reserve_price` int DEFAULT NULL,
+    `category` int unsigned NOT NULL,
+    PRIMARY KEY (`id`),
+    KEY `object_X_user` (`poster`),
+    CONSTRAINT `object_X_user` FOREIGN KEY (`poster`) REFERENCES `users` (`id`)
+  ) ENGINE = InnoDB AUTO_INCREMENT = 5 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci
+
+  # Ratings
+  CREATE TABLE
+  `ratings` (
+    `id` int unsigned NOT NULL AUTO_INCREMENT,
+    `rating` int DEFAULT NULL,
+    `user` int unsigned DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    KEY `user_X_users` (`user`),
+    CONSTRAINT `user_X_users` FOREIGN KEY (`user`) REFERENCES `users` (`id`)
+  ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci
+
+  # Users
+  CREATE TABLE
+  `users` (
+    `id` int unsigned NOT NULL AUTO_INCREMENT,
+    `name` varchar(255) NOT NULL,
+    `email` varchar(255) NOT NULL,
+    `password` varchar(255) NOT NULL,
+    PRIMARY KEY (`id`)
+  ) ENGINE = InnoDB AUTO_INCREMENT = 4 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci
